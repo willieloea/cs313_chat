@@ -19,9 +19,6 @@ MAIN_CLASS = SimpleJavaFXApp	# Name of our main class
 ### Targets ###
 ###############
 
-# see this page for how to start a javafx program:
-# https://openjfx.io/openjfx-docs/#install-javafx
-
 # Target: build  (compiles the JavaFX program)
 build:
 	@mkdir -p $(OUTPUT_DIR)
@@ -30,6 +27,15 @@ build:
 # Target: run (builds and runs the JavaFx program)
 run: build
 	$(JAVA) --module-path $(FX_LIB) --add-modules javafx.controls -cp $(OUTPUT_DIR) $(MAIN_CLASS)
+
+# Target: build  (compiles the JavaFX program)
+buildfxml:
+	@mkdir -p $(OUTPUT_DIR)
+	$(JAVAC) --module-path $(FX_LIB) --add-modules javafx.controls,javafx.fxml -d $(OUTPUT_DIR) src/client/Main.java
+
+# Target: run (builds and runs the JavaFx program)
+runfxml: buildfxml
+	$(JAVA) --module-path $(FX_LIB) --add-modules javafx.controls,javafx.fxml -cp ./out Main
 
 # Target: clean (removes compiled files)
 clean:
@@ -43,3 +49,6 @@ help:
 	@echo "  clean   - Remove the compiled files"
 	@echo "  help    - Display this help message"
 
+
+# see this page for how to start a javafx program:
+# https://openjfx.io/openjfx-docs/#install-javafx
